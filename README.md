@@ -1,6 +1,6 @@
 # Metodo DISC
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/c8ca634f-6c74-4811-91b4-72a10ad7bdf/deploy-status)](https://app.netlify.com/projects/metodo-disc/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c8ca634f-6c74-4811-91b4-72a10ad7bdfd/deploy-status)](https://app.netlify.com/projects/metodo-disc/deploys)
 
 Este repositorio contiene la implementación del **Método DISC**, una herramienta utilizada para identificar perfiles de comportamiento. El contenido está desarrollado utilizando HTML.
 
