@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía Estratégica: El Marco DISC con Asistente de IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 380px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 380px;
+                max-height: 420px;
+            }
+        }
+        .color-red { color: #D90429; }
+        .bg-red-light { background-color: #D904291A; }
+        .border-red { border-color: #D90429; }
+        
+        .color-yellow { color: #F7B801; }
+        .bg-yellow-light { background-color: #F7B8011A; }
+        .border-yellow { border-color: #F7B801; }
+
+        .color-green { color: #0081A7; }
+        .bg-green-light { background-color: #0081A71A; }
+        .border-green { border-color: #0081A7; }
+
+        .color-blue { color: #2E3192; }
+        .bg-blue-light { background-color: #2E31921A; }
+        .border-blue { border-color: #2E3192; }
+
+        .flow-step {
+            border-width: 2px;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s;
+        }
+        .flow-step:hover {
+            transform: translateY(-5px);
+        }
+        .flow-arrow {
+            font-size: 2.5rem;
+            line-height: 1;
+            color: #adb5bd;
+            align-self: center;
+        }
+        #adaptMessageBtn:disabled, #analyzeTeamBtn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">El Plan Maestro de la <span class="color-blue">Adaptabilidad</span></h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">Una guía visual y estratégica para dominar el marco DISC. Transforme sus interacciones, potencie sus equipos y lidere con eficacia aprendiendo el arte de la fluidez conductual.</p>
+        </header>
+
+        <section id="profiles" class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-10">La Brújula de Cuatro Colores: Decodificando el Comportamiento</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-8 border-red">
+                    <h3 class="text-2xl font-bold color-red mb-3">Perfil Rojo (Dominancia)</h3>
+                    <p class="text-gray-700 mb-4">Motivados por los <strong>resultados y el control</strong>, su pregunta clave es <strong>"¿Qué?"</strong>. Son directos, decididos y competitivos, asumiendo el liderazgo de forma natural para alcanzar objetivos ambiciosos.</p>
+                    <div class="chart-container">
+                        <canvas id="redChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-8 border-yellow">
+                    <h3 class="text-2xl font-bold color-yellow mb-3">Perfil Amarillo (Influencia)</h3>
+                    <p class="text-gray-700 mb-4">Impulsados por el <strong>reconocimiento y la interacción</strong>, su pregunta es <strong>"¿Quién?"</strong>. Son sociables, entusiastas y optimistas, excelentes para motivar e inspirar a otros.</p>
+                    <div class="chart-container">
+                        <canvas id="yellowChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-8 border-green">
+                    <h3 class="text-2xl font-bold color-green mb-3">Perfil Verde (Estabilidad)</h3>
+                    <p class="text-gray-700 mb-4">Valoran la <strong>cooperación y la seguridad</strong>, preguntando <strong>"¿Cómo?"</strong>. Son pacientes, fiables y leales, aportando la armonía y cohesión esenciales para el equipo.</p>
+                    <div class="chart-container">
+                        <canvas id="greenChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-8 border-blue">
+                    <h3 class="text-2xl font-bold color-blue mb-3">Perfil Azul (Cumplimiento)</h3>
+                    <p class="text-gray-700 mb-4">Guiados por la <strong>calidad y la lógica</strong>, su pregunta es <strong>"¿Por qué?"</strong>. Son analíticos, precisos y metódicos, garantizando la corrección y la excelencia en los procesos.</p>
+                    <div class="chart-container">
+                        <canvas id="blueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="adaptation" class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-4">El Flujo de la Comunicación Adaptativa</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-10">La maestría no consiste en cambiar quién eres, sino en ajustar cómo entregas el mensaje. La responsabilidad de la comunicación eficaz recae en el emisor.</p>
+            
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="flex flex-col md:flex-row justify-around items-center gap-4">
+                    <div class="flow-step bg-gray-100 border-gray-300 w-full md:w-1/4">1. El Espejo:<br>Conoce tu propio estilo</div>
+                    <div class="flow-arrow hidden md:block">→</div>
+                    <div class="flow-arrow block md:hidden">↓</div>
+                    <div class="flow-step bg-gray-100 border-gray-300 w-full md:w-1/4">2. La Ventana:<br>Decodifica a los demás</div>
+                    <div class="flow-arrow hidden md:block">→</div>
+                    <div class="flow-arrow block md:hidden">↓</div>
+                    <div class="flow-step bg-gray-100 border-gray-300 w-full md:w-1/4">3. La Adaptación:<br>Ajusta tu enfoque</div>
+                </div>
+                <div class="mt-10 pt-8 border-t">
+                    <h4 class="font-bold text-xl text-center mb-6">Matriz de Persuasión Rápida</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-red-light p-4 rounded-lg">
+                            <h5 class="font-bold text-lg color-red mb-2">Para persuadir a un Rojo:</h5>
+                            <p>✓ Enfócate en el <strong>resultado final</strong> y los beneficios directos.</p>
+                            <p>✗ Evita la charla trivial y la indecisión.</p>
+                        </div>
+                        <div class="bg-yellow-light p-4 rounded-lg">
+                            <h5 class="font-bold text-lg color-yellow mb-2">Para persuadir a un Amarillo:</h5>
+                            <p>✓ Muestra cómo mejorará su <strong>estatus o relaciones</strong>.</p>
+                            <p>✗ Evita el pesimismo y el exceso de detalles.</p>
+                        </div>
+                        <div class="bg-green-light p-4 rounded-lg">
+                            <h5 class="font-bold text-lg color-green mb-2">Para persuadir a un Verde:</h5>
+                            <p>✓ Explica el impacto en el <strong>equipo y la seguridad</strong>.</p>
+                            <p>✗ Evita la presión y los cambios bruscos.</p>
+                        </div>
+                        <div class="bg-blue-light p-4 rounded-lg">
+                            <h5 class="font-bold text-lg color-blue mb-2">Para persuadir a un Azul:</h5>
+                            <p>✓ Proporciona <strong>datos, hechos y pruebas</strong> lógicas.</p>
+                            <p>✗ Evita las decisiones apresuradas y la falta de información.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gemini API Feature Section -->
+        <section id="ai-coach" class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-4">Asistente de Comunicación con IA ✨</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-10">Escribe tu mensaje y selecciona el perfil DISC de tu interlocutor. La IA lo adaptará para lograr el máximo impacto y claridad.</p>
+            <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <label for="originalMessage" class="block text-sm font-bold text-gray-800 mb-2">Tu Mensaje Original:</label>
+                        <textarea id="originalMessage" rows="8" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: 'Necesito el informe para mañana sin falta.'"></textarea>
+                    </div>
+                    <div>
+                        <label for="recipientProfile" class="block text-sm font-bold text-gray-800 mb-2">Perfil del Receptor:</label>
+                        <select id="recipientProfile" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="Rojo (Dominancia)">Rojo (Dominancia)</option>
+                            <option value="Amarillo (Influencia)">Amarillo (Influencia)</option>
+                            <option value="Verde (Estabilidad)">Verde (Estabilidad)</option>
+                            <option value="Azul (Cumplimiento)">Azul (Cumplimiento)</option>
+                        </select>
+                        <button id="adaptMessageBtn" class="mt-4 w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center shadow-md hover:shadow-lg">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" id="loadingSpinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span>Adaptar Mensaje ✨</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="resultContainer" class="mt-6 hidden">
+                    <h4 class="font-bold text-xl mb-3 text-gray-800">Mensaje Adaptado:</h4>
+                    <div id="adaptedMessage" class="bg-gray-100 p-4 rounded-lg border border-gray-200 whitespace-pre-wrap text-gray-700"></div>
+                </div>
+                <div id="errorContainer" class="mt-4 text-red-600 font-semibold hidden"></div>
+            </div>
+        </section>
+
+        <section id="teams" class="mb-20">
+             <h2 class="text-3xl font-bold text-center mb-10">Arquitectura de Equipos de Alto Rendimiento</h2>
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                    <div class="md:col-span-2">
+                        <h3 class="text-2xl font-bold mb-4">La Diversidad Cognitiva es Estratégica</h3>
+                        <p class="text-gray-700 mb-4">Los equipos más eficaces no son homogéneos. Un equilibrio de los cuatro perfiles DISC garantiza que todas las funciones críticas estén cubiertas, desde el impulso inicial hasta la garantía de calidad final.</p>
+                        <ul class="space-y-3 mt-6">
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #D90429;"></span><span><strong>Rojos:</strong> Impulsan la acción y los resultados.</span></li>
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #F7B801;"></span><span><strong>Amarillos:</strong> Generan ideas y motivan.</span></li>
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #0081A7;"></span><span><strong>Verdes:</strong> Aseguran la cohesión y la estabilidad.</span></li>
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #2E3192;"></span><span><strong>Azules:</strong> Mantienen la calidad y la precisión.</span></li>
+                        </ul>
+                    </div>
+                    <div class="md:col-span-3">
+                        <div class="chart-container h-80 md:h-96">
+                            <canvas id="teamCompositionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Gemini API Team Synergy Analysis -->
+        <section id="ai-team-analysis" class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-4">Análisis de Sinergia de Equipo con IA ✨</h2>
+            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-10">Define la composición de tu equipo para recibir un análisis instantáneo sobre sus fortalezas, puntos de fricción y consejos de liderazgo personalizados.</p>
+            <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div>
+                        <label for="teamRed" class="block text-sm font-bold color-red mb-2">Miembros Rojos (D)</label>
+                        <input type="number" id="teamRed" value="1" min="0" class="w-full p-2 border-2 border-red rounded-lg text-center font-bold text-lg focus:ring-2 focus:ring-red-400">
+                    </div>
+                    <div>
+                        <label for="teamYellow" class="block text-sm font-bold color-yellow mb-2">Miembros Amarillos (I)</label>
+                        <input type="number" id="teamYellow" value="1" min="0" class="w-full p-2 border-2 border-yellow rounded-lg text-center font-bold text-lg focus:ring-2 focus:ring-yellow-400">
+                    </div>
+                    <div>
+                        <label for="teamGreen" class="block text-sm font-bold color-green mb-2">Miembros Verdes (S)</label>
+                        <input type="number" id="teamGreen" value="1" min="0" class="w-full p-2 border-2 border-green rounded-lg text-center font-bold text-lg focus:ring-2 focus:ring-green-400">
+                    </div>
+                    <div>
+                        <label for="teamBlue" class="block text-sm font-bold color-blue mb-2">Miembros Azules (C)</label>
+                        <input type="number" id="teamBlue" value="1" min="0" class="w-full p-2 border-2 border-blue rounded-lg text-center font-bold text-lg focus:ring-2 focus:ring-blue-400">
+                    </div>
+                </div>
+                <button id="analyzeTeamBtn" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center shadow-md hover:shadow-lg">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" id="teamLoadingSpinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Analizar Sinergia del Equipo ✨</span>
+                </button>
+                <div id="teamResultContainer" class="mt-6 hidden">
+                    <h4 class="font-bold text-xl mb-3 text-gray-800">Análisis de Sinergia:</h4>
+                    <div id="teamAnalysisResult" class="bg-gray-100 p-4 rounded-lg border border-gray-200 text-gray-700 leading-relaxed"></div>
+                </div>
+                <div id="teamErrorContainer" class="mt-4 text-red-600 font-semibold hidden"></div>
+            </div>
+        </section>
+
+        <section id="impact" class="mb-20 text-center bg-gray-800 text-white py-12 px-6 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold mb-4">El Retorno de la Inversión en Fluidez Conductual</h2>
+            <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-10">Organizaciones como Carhartt y Lowell Health Center demuestran que la implementación estratégica de DISC genera resultados medibles y una transformación cultural duradera.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-gray-700 p-6 rounded-lg">
+                    <p class="text-5xl md:text-6xl font-black color-blue">35%</p>
+                    <p class="font-bold text-gray-300 mt-2">Aumento en promociones internas</p>
+                </div>
+                <div class="bg-gray-700 p-6 rounded-lg">
+                    <p class="text-5xl md:text-6xl font-black color-green">50%</p>
+                    <p class="font-bold text-gray-300 mt-2">Mejora en colaboración interdepartamental</p>
+                </div>
+                <div class="bg-gray-700 p-6 rounded-lg">
+                    <p class="text-5xl md:text-6xl font-black color-yellow">9/10</p>
+                    <p class="font-bold text-gray-300 mt-2">Alineación del equipo directivo</p>
+                </div>
+                 <div class="bg-gray-700 p-6 rounded-lg">
+                    <p class="text-5xl md:text-6xl font-black color-red">45%</p>
+                    <p class="font-bold text-gray-300 mt-2">Reducción de conflictos</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="references" class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-10">Tomado de:</h2>
+            <div class="bg-white rounded-xl shadow-lg p-8 max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/3 flex-shrink-0">
+                    <img src="https://books.google.com.do/books/publisher/content?id=mo1xDwAAQBAJ&pg=PA1&img=1&zoom=3&hl=en&bul=1&sig=ACfU3U3TOJnoexbpo_5p7N_2iV7JL8HdLg&w=1280" alt="Portada del libro Surrounded by Idiots de Thomas Erikson" class="rounded-lg shadow-lg w-full" onerror="this.onerror=null;this.src='https://placehold.co/400x600/cccccc/ffffff?text=Portada+no+disponible';">
+                </div>
+                <div class="md:w-2/3">
+                    <h3 class="text-2xl font-bold mb-3">Surrounded by Idiots</h3>
+                    <p class="text-gray-500 mb-4">por Thomas Erikson</p>
+                    <p class="text-gray-700">Este libro popularizó el sistema DISC para una audiencia global, explicando los cuatro tipos de comportamiento (Rojo, Amarillo, Verde y Azul) de una manera accesible y entretenida. Proporciona la base para entender por qué las personas actúan como lo hacen y cómo podemos adaptar nuestra comunicación para mejorar nuestras relaciones personales y profesionales.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="text-center p-6 mt-12 bg-gray-200 text-gray-600">
+        <p>Infografía generada a partir del análisis estratégico del marco DISC.</p>
+        <p class="text-sm text-gray-500 mt-1">Confirmación: Ni Mermaid JS ni SVG fueron utilizados en la creación de este artefacto.</p>
+    </footer>
+
+    <script>
+        // --- Chart.js Configuration ---
+        const FONT_COLOR = '#1c1e21';
+        const GRID_COLOR = '#e0e0e0';
+
+        const DISC_PALETTE = {
+            red: '#D90429',
+            yellow: '#F7B801',
+            green: '#0081A7',
+            blue: '#2E3192'
+        };
+
+        function wrapLabel(label) {
+            const maxLength = 16;
+            if (typeof label !== 'string' || label.length <= maxLength) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + ' ' + word).length > maxLength && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += (currentLine.length === 0 ? '' : ' ') + word;
+            }
+            if (currentLine.length > 0) lines.push(currentLine.trim());
+            return lines.length > 0 ? lines : [label];
+        }
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            return Array.isArray(label) ? label.join(' ') : label;
+        };
+        
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: { title: tooltipTitleCallback },
+                    backgroundColor: '#fff',
+                    titleColor: '#000',
+                    bodyColor: '#000',
+                    borderColor: '#ccc',
+                    borderWidth: 1
+                }
+            }
+        };
+
+        const polarAreaOptions = (color) => ({
+            ...commonChartOptions,
+            scales: {
+                r: {
+                    grid: { color: GRID_COLOR },
+                    ticks: { display: false, backdropColor: 'transparent' }
+                }
+            },
+            plugins: {
+                legend: { display: true, position: 'bottom', labels: { color: FONT_COLOR, font: { size: 12 } } },
+                tooltip: {
+                    callbacks: { title: tooltipTitleCallback },
+                    backgroundColor: '#fff',
+                    titleColor: '#000',
+                    bodyColor: '#000',
+                    borderColor: color,
+                    borderWidth: 2
+                }
+            }
+        });
+
+        const polarLabels = ['Asertividad', 'Sociabilidad', 'Paciencia', 'Análisis'];
+        new Chart(document.getElementById('redChart'), { type: 'polarArea', data: { labels: polarLabels, datasets: [{ data: [95, 40, 15, 30], backgroundColor: ['rgba(217, 4, 41, 0.6)', 'rgba(247, 184, 1, 0.6)', 'rgba(0, 129, 167, 0.6)', 'rgba(46, 49, 146, 0.6)'] }] }, options: polarAreaOptions(DISC_PALETTE.red) });
+        new Chart(document.getElementById('yellowChart'), { type: 'polarArea', data: { labels: polarLabels, datasets: [{ data: [50, 95, 60, 25], backgroundColor: ['rgba(217, 4, 41, 0.6)', 'rgba(247, 184, 1, 0.6)', 'rgba(0, 129, 167, 0.6)', 'rgba(46, 49, 146, 0.6)'] }] }, options: polarAreaOptions(DISC_PALETTE.yellow) });
+        new Chart(document.getElementById('greenChart'), { type: 'polarArea', data: { labels: polarLabels, datasets: [{ data: [20, 65, 95, 50], backgroundColor: ['rgba(217, 4, 41, 0.6)', 'rgba(247, 184, 1, 0.6)', 'rgba(0, 129, 167, 0.6)', 'rgba(46, 49, 146, 0.6)'] }] }, options: polarAreaOptions(DISC_PALETTE.green) });
+        new Chart(document.getElementById('blueChart'), { type: 'polarArea', data: { labels: polarLabels, datasets: [{ data: [35, 20, 45, 95], backgroundColor: ['rgba(217, 4, 41, 0.6)', 'rgba(247, 184, 1, 0.6)', 'rgba(0, 129, 167, 0.6)', 'rgba(46, 49, 146, 0.6)'] }] }, options: polarAreaOptions(DISC_PALETTE.blue) });
+
+        const wrappedBarLabels = ['Liderazgo Estratégico', 'Equipo de Ventas', 'Equipo de Ingeniería', 'Recursos Humanos', 'Atención al Cliente'].map(wrapLabel);
+        new Chart(document.getElementById('teamCompositionChart'), { type: 'bar', data: { labels: wrappedBarLabels, datasets: [{ label: 'Rojo', data: [35, 40, 10, 15, 20], backgroundColor: DISC_PALETTE.red }, { label: 'Amarillo', data: [30, 35, 15, 30, 30], backgroundColor: DISC_PALETTE.yellow }, { label: 'Verde', data: [20, 15, 30, 40, 40], backgroundColor: DISC_PALETTE.green }, { label: 'Azul', data: [15, 10, 45, 15, 10], backgroundColor: DISC_PALETTE.blue }] }, options: { ...commonChartOptions, plugins: { title: { display: true, text: 'Composición de Equipos por Perfil DISC', font: {size: 16}, color: FONT_COLOR, padding: { bottom: 20 } }, legend: { position: 'bottom', labels: { color: FONT_COLOR } }, tooltip: { callbacks: { title: tooltipTitleCallback }, backgroundColor: '#fff', titleColor: '#000', bodyColor: '#000', borderColor: '#ccc', borderWidth: 1 } }, scales: { x: { stacked: true, grid: { display: false }, ticks: { color: FONT_COLOR } }, y: { stacked: true, title: { display: true, text: 'Contribución Relativa (%)', color: FONT_COLOR }, grid: { color: GRID_COLOR }, ticks: { color: FONT_COLOR } } }, indexAxis: 'y' } });
+
+        // --- Gemini API Coach ---
+        const adaptMessageBtn = document.getElementById('adaptMessageBtn');
+        const originalMessage = document.getElementById('originalMessage');
+        const recipientProfile = document.getElementById('recipientProfile');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const resultContainer = document.getElementById('resultContainer');
+        const adaptedMessage = document.getElementById('adaptedMessage');
+        const errorContainer = document.getElementById('errorContainer');
+
+        adaptMessageBtn.addEventListener('click', async () => {
+            const message = originalMessage.value.trim();
+            if (!message) {
+                errorContainer.textContent = 'Por favor, escribe un mensaje para adaptar.';
+                errorContainer.classList.remove('hidden');
+                resultContainer.classList.add('hidden');
+                return;
+            }
+
+            loadingSpinner.classList.remove('hidden');
+            adaptMessageBtn.disabled = true;
+            errorContainer.classList.add('hidden');
+            resultContainer.classList.add('hidden');
+
+            const profile = recipientProfile.value;
+            const prompt = `Eres un coach experto en comunicación y en el modelo DISC. Tu tarea es reescribir el siguiente mensaje para que sea más efectivo y persuasivo para una persona con un perfil ${profile}. Sé conciso, directo y utiliza un tono profesional pero adaptado. No añadas explicaciones sobre por qué hiciste los cambios, solo proporciona el mensaje reescrito.\n\nMensaje Original: '${message}'`;
+
+            try {
+                const result = await callGeminiWithBackoff(prompt);
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    adaptedMessage.textContent = text;
+                    resultContainer.classList.remove('hidden');
+                } else {
+                    throw new Error('La respuesta de la API no tuvo el formato esperado.');
+                }
+
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                errorContainer.textContent = 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.';
+                errorContainer.classList.remove('hidden');
+            } finally {
+                loadingSpinner.classList.add('hidden');
+                adaptMessageBtn.disabled = false;
+            }
+        });
+        
+        // --- Gemini API Team Synergy Analysis ---
+        const analyzeTeamBtn = document.getElementById('analyzeTeamBtn');
+        const teamLoadingSpinner = document.getElementById('teamLoadingSpinner');
+        const teamResultContainer = document.getElementById('teamResultContainer');
+        const teamAnalysisResult = document.getElementById('teamAnalysisResult');
+        const teamErrorContainer = document.getElementById('teamErrorContainer');
+
+        analyzeTeamBtn.addEventListener('click', async () => {
+            const teamComposition = {
+                red: document.getElementById('teamRed').value,
+                yellow: document.getElementById('teamYellow').value,
+                green: document.getElementById('teamGreen').value,
+                blue: document.getElementById('teamBlue').value
+            };
+
+            const totalMembers = Object.values(teamComposition).reduce((sum, count) => sum + parseInt(count || 0), 0);
+            if (totalMembers === 0) {
+                teamErrorContainer.textContent = 'Por favor, define la composición del equipo con al menos un miembro.';
+                teamErrorContainer.classList.remove('hidden');
+                teamResultContainer.classList.add('hidden');
+                return;
+            }
+
+            teamLoadingSpinner.classList.remove('hidden');
+            analyzeTeamBtn.disabled = true;
+            teamErrorContainer.classList.add('hidden');
+            teamResultContainer.classList.add('hidden');
+
+            const prompt = `Como un consultor experto en desarrollo organizacional y en el modelo DISC, analiza la siguiente composición de equipo:
+- Perfiles Rojos (Dominancia): ${teamComposition.red}
+- Perfiles Amarillos (Influencia): ${teamComposition.yellow}
+- Perfiles Verdes (Estabilidad): ${teamComposition.green}
+- Perfiles Azules (Cumplimiento): ${teamComposition.blue}
+
+Proporciona un análisis conciso y accionable en español. Estructura tu respuesta con los siguientes encabezados en negrita:
+
+**Análisis General y Sinergia:** (Describe la dinámica general del equipo).
+**Fortalezas Clave:** (Enumera 3 fortalezas principales).
+**Puntos de Fricción Potenciales:** (Enumera 3 posibles áreas de conflicto).
+**Consejos para el Líder:** (Ofrece 3 consejos prácticos para liderar a este grupo específico).
+
+Mantén un tono profesional y constructivo.`;
+
+            try {
+                const result = await callGeminiWithBackoff(prompt);
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Replace markdown bold with strong tags and newlines with br tags for HTML rendering
+                    teamAnalysisResult.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-gray-900 block mt-3 mb-1">$1</strong>').replace(/\n/g, '<br>');
+                    teamResultContainer.classList.remove('hidden');
+                } else {
+                    throw new Error('La respuesta de la API no tuvo el formato esperado.');
+                }
+
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                teamErrorContainer.textContent = 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.';
+                teamErrorContainer.classList.remove('hidden');
+            } finally {
+                teamLoadingSpinner.classList.add('hidden');
+                analyzeTeamBtn.disabled = false;
+            }
+        });
+
+
+        async function callGeminiWithBackoff(prompt) {
+            const apiKey = ""; // The API key is provided by the environment.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{
+                    role: "user",
+                    parts: [{ text: prompt }]
+                }]
+            };
+
+            let delay = 1000;
+            const maxRetries = 5;
+
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        return await response.json();
+                    } else if (response.status === 429 || response.status >= 500) {
+                        // Exponential backoff for rate limiting and server errors
+                        console.warn(`Request failed with status ${response.status}. Retrying in ${delay / 1000}s...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                    } else {
+                        const errorBody = await response.text();
+                        throw new Error(`API request failed with status: ${response.status}. Body: ${errorBody}`);
+                    }
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error; // Throw error after last retry
+                    console.warn(`Request attempt ${i + 1} failed. Retrying in ${delay / 1000}s...`, error);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+            }
+            throw new Error("API request failed after multiple retries.");
+        }
+    </script>
+</body>
+</html>
