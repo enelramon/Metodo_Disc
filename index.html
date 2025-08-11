@@ -77,19 +77,7 @@
         <header class="text-center mb-16">
             <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">El Plan Maestro de la <span class="color-blue">Adaptabilidad</span></h1>
             <p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">Una guía visual y estratégica para dominar el marco DISC. Transforme sus interacciones, potencie sus equipos y lidere con eficacia aprendiendo el arte de la fluidez conductual.</p>
-        </header>
-
-        <!-- API Key Section -->
-        <section id="api-key-setup" class="mb-12 bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto">
-            <h3 class="text-xl font-bold text-center mb-4">Configuración de la API de IA</h3>
-            <p class="text-center text-sm text-gray-600 mb-4">Para activar las funciones de IA, por favor introduce tu clave de API de Google Gemini. La clave se guardará en tu navegador de forma segura.</p>
-            <div class="flex items-center gap-2">
-                <input type="password" id="apiKeyInput" placeholder="Pega tu clave de API de Gemini aquí" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                <button id="saveApiKeyBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Guardar</button>
-            </div>
-            <p id="apiKeyStatus" class="text-center text-sm mt-3 font-semibold"></p>
-        </section>
-
+        </header>       
         <section id="what-is-disc" class="mb-20">
             <h2 class="text-3xl font-bold text-center mb-10">El Modelo DISC: Un Lenguaje Común para la Colaboración</h2>
             <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto text-gray-700 leading-relaxed">
@@ -196,6 +184,67 @@
             </div>
         </section>
 
+        <section id="teams" class="mb-20">
+             <h2 class="text-3xl font-bold text-center mb-10">Arquitectura de Equipos de Alto Rendimiento</h2>
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                    <div class="md:col-span-2">
+                        <h3 class="text-2xl font-bold mb-4">La Diversidad Cognitiva es Estratégica</h3>
+                        <p class="text-gray-700 mb-4">Los equipos más eficaces no son homogéneos. Un equilibrio de los cuatro perfiles DISC garantiza que todas las funciones críticas estén cubiertas, desde el impulso inicial hasta la garantía de calidad final.</p>
+                        <ul class="space-y-3 mt-6">
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #D90429;"></span><span><strong>Rojos:</strong> Impulsan la acción y los resultados.</span></li>
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #F7B801;"></span><span><strong>Amarillos:</strong> Generan ideas y motivan.</span></li>
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #0081A7;"></span><span><strong>Verdes:</strong> Aseguran la cohesión y la estabilidad.</span></li>
+                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #2E3192;"></span><span><strong>Azules:</strong> Mantienen la calidad y la precisión.</span></li>
+                        </ul>
+                    </div>
+                    <div class="md:col-span-3">
+                        <div class="chart-container h-80 md:h-96">
+                            <canvas id="teamCompositionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="impact" class="mb-20 text-center bg-gray-800 text-white py-12 px-6 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold mb-4">El Retorno de la Inversión en Fluidez Conductual</h2>
+            <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-10">Organizaciones como Carhartt y Lowell Health Center demuestran que la implementación estratégica de DISC genera resultados medibles y una transformación cultural duradera.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-gray-700 p-6 rounded-lg">
+                    <p class="text-5xl md:text-6xl font-black color-blue">35%</p>
+                    <p class="font-bold text-gray-300 mt-2">Aumento en promociones internas</p>
+                </div>
+                <div class="bg-gray-700 p-6 rounded-lg">
+                    <p class="text-5xl md:text-6xl font-black color-green">50%</p>
+                    <p class="font-bold text-gray-300 mt-2">Mejora en colaboración interdepartamental</p>
+                </div>
+                <div class="bg-gray-700 p-6 rounded-lg">
+                    <p class="text-5xl md:text-6xl font-black color-yellow">9/10</p>
+                    <p class="font-bold text-gray-300 mt-2">Alineación del equipo directivo</p>
+                </div>
+                 <div class="bg-gray-700 p-6 rounded-lg">
+                    <p class="text-5xl md:text-6xl font-black color-red">45%</p>
+                    <p class="font-bold text-gray-300 mt-2">Reducción de conflictos</p>
+                </div>
+            </div>
+        </section>
+
+        
+         <!-- API Key Section -->
+        <section id="api-key-setup" class="mb-12 bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto">
+            <h3 class="text-xl font-bold text-center mb-4">Configuración de la API de IA</h3>
+            <p class="text-center text-sm text-gray-600 mb-4">Para activar las funciones de IA, por favor introduce tu clave de API de Google Gemini. La clave se guardará en tu navegador de forma segura.</p>
+            <div class="flex items-center gap-2">
+                <input type="password" id="apiKeyInput" 
+                    value="apiKeyInputAIzaSyDzALFYAS3rJScHEzGF9asRTWQv5ZbcjBY"
+                    placeholder="Pega tu clave de API de Gemini aquí" 
+                    class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <button id="saveApiKeyBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Guardar</button>
+            </div>
+            <p id="apiKeyStatus" class="text-center text-sm mt-3 font-semibold"></p>
+        </section>
+        
         <!-- Gemini API Feature Section -->
         <section id="ai-coach" class="mb-20">
             <h2 class="text-3xl font-bold text-center mb-4">Asistente de Comunicación con IA ✨</h2>
@@ -230,30 +279,6 @@
                 <div id="errorContainer" class="mt-4 text-red-600 font-semibold hidden"></div>
             </div>
         </section>
-
-        <section id="teams" class="mb-20">
-             <h2 class="text-3xl font-bold text-center mb-10">Arquitectura de Equipos de Alto Rendimiento</h2>
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
-                    <div class="md:col-span-2">
-                        <h3 class="text-2xl font-bold mb-4">La Diversidad Cognitiva es Estratégica</h3>
-                        <p class="text-gray-700 mb-4">Los equipos más eficaces no son homogéneos. Un equilibrio de los cuatro perfiles DISC garantiza que todas las funciones críticas estén cubiertas, desde el impulso inicial hasta la garantía de calidad final.</p>
-                        <ul class="space-y-3 mt-6">
-                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #D90429;"></span><span><strong>Rojos:</strong> Impulsan la acción y los resultados.</span></li>
-                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #F7B801;"></span><span><strong>Amarillos:</strong> Generan ideas y motivan.</span></li>
-                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #0081A7;"></span><span><strong>Verdes:</strong> Aseguran la cohesión y la estabilidad.</span></li>
-                            <li class="flex items-center"><span class="w-4 h-4 rounded-full mr-3" style="background-color: #2E3192;"></span><span><strong>Azules:</strong> Mantienen la calidad y la precisión.</span></li>
-                        </ul>
-                    </div>
-                    <div class="md:col-span-3">
-                        <div class="chart-container h-80 md:h-96">
-                            <canvas id="teamCompositionChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
         <!-- Gemini API Team Synergy Analysis -->
         <section id="ai-team-analysis" class="mb-20">
             <h2 class="text-3xl font-bold text-center mb-4">Análisis de Sinergia de Equipo con IA ✨</h2>
@@ -291,30 +316,7 @@
                 <div id="teamErrorContainer" class="mt-4 text-red-600 font-semibold hidden"></div>
             </div>
         </section>
-
-        <section id="impact" class="mb-20 text-center bg-gray-800 text-white py-12 px-6 rounded-xl shadow-lg">
-            <h2 class="text-3xl font-bold mb-4">El Retorno de la Inversión en Fluidez Conductual</h2>
-            <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-10">Organizaciones como Carhartt y Lowell Health Center demuestran que la implementación estratégica de DISC genera resultados medibles y una transformación cultural duradera.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-gray-700 p-6 rounded-lg">
-                    <p class="text-5xl md:text-6xl font-black color-blue">35%</p>
-                    <p class="font-bold text-gray-300 mt-2">Aumento en promociones internas</p>
-                </div>
-                <div class="bg-gray-700 p-6 rounded-lg">
-                    <p class="text-5xl md:text-6xl font-black color-green">50%</p>
-                    <p class="font-bold text-gray-300 mt-2">Mejora en colaboración interdepartamental</p>
-                </div>
-                <div class="bg-gray-700 p-6 rounded-lg">
-                    <p class="text-5xl md:text-6xl font-black color-yellow">9/10</p>
-                    <p class="font-bold text-gray-300 mt-2">Alineación del equipo directivo</p>
-                </div>
-                 <div class="bg-gray-700 p-6 rounded-lg">
-                    <p class="text-5xl md:text-6xl font-black color-red">45%</p>
-                    <p class="font-bold text-gray-300 mt-2">Reducción de conflictos</p>
-                </div>
-            </div>
-        </section>
-
+        
         <section id="references" class="mb-20">
             <h2 class="text-3xl font-bold text-center mb-10">Tomado de:</h2>
             <div class="bg-white rounded-xl shadow-lg p-8 max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-8">
