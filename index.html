@@ -79,6 +79,17 @@
             <p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">Una guía visual y estratégica para dominar el marco DISC. Transforme sus interacciones, potencie sus equipos y lidere con eficacia aprendiendo el arte de la fluidez conductual.</p>
         </header>
 
+        <!-- API Key Section -->
+        <section id="api-key-setup" class="mb-12 bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto">
+            <h3 class="text-xl font-bold text-center mb-4">Configuración de la API de IA</h3>
+            <p class="text-center text-sm text-gray-600 mb-4">Para activar las funciones de IA, por favor introduce tu clave de API de Google Gemini. La clave se guardará en tu navegador de forma segura.</p>
+            <div class="flex items-center gap-2">
+                <input type="password" id="apiKeyInput" placeholder="Pega tu clave de API de Gemini aquí" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <button id="saveApiKeyBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Guardar</button>
+            </div>
+            <p id="apiKeyStatus" class="text-center text-sm mt-3 font-semibold"></p>
+        </section>
+
         <section id="what-is-disc" class="mb-20">
             <h2 class="text-3xl font-bold text-center mb-10">El Modelo DISC: Un Lenguaje Común para la Colaboración</h2>
             <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto text-gray-700 leading-relaxed">
@@ -326,6 +337,51 @@
     </footer>
 
     <script>
+        // --- Global State ---
+        let geminiApiKey = 'AIzaSyDzALFYAS3rJScHEzGF9asRTWQv5ZbcjBY';
+
+        // --- DOM Elements ---
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
+        const apiKeyStatus = document.getElementById('apiKeyStatus');
+        const adaptMessageBtn = document.getElementById('adaptMessageBtn');
+        const analyzeTeamBtn = document.getElementById('analyzeTeamBtn');
+
+        // --- API Key Management ---
+        function saveApiKey() {
+            const key = apiKeyInput.value.trim();
+            if (key) {
+                localStorage.setItem('geminiApiKey', key);
+                geminiApiKey = key;
+                apiKeyStatus.textContent = '¡Clave guardada con éxito!';
+                apiKeyStatus.className = 'text-center text-sm mt-3 font-semibold text-green-600';
+                toggleAiFeatures(true);
+            } else {
+                apiKeyStatus.textContent = 'Por favor, introduce una clave válida.';
+                apiKeyStatus.className = 'text-center text-sm mt-3 font-semibold text-red-600';
+            }
+        }
+
+        function loadApiKey() {
+            const savedKey = localStorage.getItem('geminiApiKey');
+            if (savedKey) {
+                geminiApiKey = savedKey;
+                apiKeyInput.value = savedKey;
+                apiKeyStatus.textContent = 'Clave de API cargada desde el almacenamiento local.';
+                apiKeyStatus.className = 'text-center text-sm mt-3 font-semibold text-green-600';
+                toggleAiFeatures(true);
+            } else {
+                apiKeyStatus.textContent = 'Se necesita una clave de API para las funciones de IA.';
+                apiKeyStatus.className = 'text-center text-sm mt-3 font-semibold text-yellow-600';
+                toggleAiFeatures(false);
+            }
+        }
+        
+        function toggleAiFeatures(enabled) {
+            adaptMessageBtn.disabled = !enabled;
+            analyzeTeamBtn.disabled = !enabled;
+        }
+
         // --- Chart.js Configuration ---
         const FONT_COLOR = '#1c1e21';
         const GRID_COLOR = '#e0e0e0';
@@ -407,7 +463,6 @@
         new Chart(document.getElementById('teamCompositionChart'), { type: 'bar', data: { labels: wrappedBarLabels, datasets: [{ label: 'Rojo', data: [35, 40, 10, 15, 20], backgroundColor: DISC_PALETTE.red }, { label: 'Amarillo', data: [30, 35, 15, 30, 30], backgroundColor: DISC_PALETTE.yellow }, { label: 'Verde', data: [20, 15, 30, 40, 40], backgroundColor: DISC_PALETTE.green }, { label: 'Azul', data: [15, 10, 45, 15, 10], backgroundColor: DISC_PALETTE.blue }] }, options: { ...commonChartOptions, plugins: { title: { display: true, text: 'Composición de Equipos por Perfil DISC', font: {size: 16}, color: FONT_COLOR, padding: { bottom: 20 } }, legend: { position: 'bottom', labels: { color: FONT_COLOR } }, tooltip: { callbacks: { title: tooltipTitleCallback }, backgroundColor: '#fff', titleColor: '#000', bodyColor: '#000', borderColor: '#ccc', borderWidth: 1 } }, scales: { x: { stacked: true, grid: { display: false }, ticks: { color: FONT_COLOR } }, y: { stacked: true, title: { display: true, text: 'Contribución Relativa (%)', color: FONT_COLOR }, grid: { color: GRID_COLOR }, ticks: { color: FONT_COLOR } } }, indexAxis: 'y' } });
 
         // --- Gemini API Coach ---
-        const adaptMessageBtn = document.getElementById('adaptMessageBtn');
         const originalMessage = document.getElementById('originalMessage');
         const recipientProfile = document.getElementById('recipientProfile');
         const loadingSpinner = document.getElementById('loadingSpinner');
@@ -451,12 +506,11 @@
                 errorContainer.classList.remove('hidden');
             } finally {
                 loadingSpinner.classList.add('hidden');
-                adaptMessageBtn.disabled = false;
+                if (geminiApiKey) adaptMessageBtn.disabled = false;
             }
         });
         
         // --- Gemini API Team Synergy Analysis ---
-        const analyzeTeamBtn = document.getElementById('analyzeTeamBtn');
         const teamLoadingSpinner = document.getElementById('teamLoadingSpinner');
         const teamResultContainer = document.getElementById('teamResultContainer');
         const teamAnalysisResult = document.getElementById('teamAnalysisResult');
@@ -518,14 +572,16 @@ Mantén un tono profesional y constructivo.`;
                 teamErrorContainer.classList.remove('hidden');
             } finally {
                 teamLoadingSpinner.classList.add('hidden');
-                analyzeTeamBtn.disabled = false;
+                if (geminiApiKey) analyzeTeamBtn.disabled = false;
             }
         });
 
 
         async function callGeminiWithBackoff(prompt) {
-            const apiKey = ""; // The API key is provided by the environment.
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            if (!geminiApiKey) {
+                throw new Error("API Key no está configurada.");
+            }
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${geminiApiKey}`;
             
             const payload = {
                 contents: [{
@@ -565,6 +621,12 @@ Mantén un tono profesional y constructivo.`;
             }
             throw new Error("API request failed after multiple retries.");
         }
+
+        // --- Event Listeners and Initialization ---
+        window.addEventListener('DOMContentLoaded', () => {
+            loadApiKey();
+            saveApiKeyBtn.addEventListener('click', saveApiKey);
+        });
     </script>
 </body>
 </html>
