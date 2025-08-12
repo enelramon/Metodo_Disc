@@ -237,7 +237,7 @@
             <p class="text-center text-sm text-gray-600 mb-4">Para activar las funciones de IA, por favor introduce tu clave de API de Google Gemini. La clave se guardará en tu navegador de forma segura.</p>
             <div class="flex items-center gap-2">
                 <input type="password" id="apiKeyInput" 
-                    value="apiKeyInputAIzaSyDzALFYAS3rJScHEzGF9asRTWQv5ZbcjBY"
+                    value=""
                     placeholder="Pega tu clave de API de Gemini aquí" 
                     class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 <button id="saveApiKeyBtn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Guardar</button>
@@ -340,7 +340,7 @@
 
     <script>
         // --- Global State ---
-        let geminiApiKey = 'AIzaSyDzALFYAS3rJScHEzGF9asRTWQv5ZbcjBY';
+        let geminiApiKey = '';
 
         // --- DOM Elements ---
         const apiKeyInput = document.getElementById('apiKeyInput');
